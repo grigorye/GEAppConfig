@@ -15,7 +15,9 @@ import var GEFoundation.buildAge
 #if DEBUG
 import var GEFoundation.nslogRedirectorInitializer
 #endif
+#if LOGGY_ENABLED
 import Loggy
+#endif
 import UIKit
 
 let analyticsShouldBeEnabled: Bool = {
@@ -56,41 +58,62 @@ open class AppDelegateBase : UIResponder, UIApplicationDelegate {
 		}
 		return true
 	}
+    
 	// MARK: -
+    
+    private func initializeBasics() {
+        let defaultsPlistURL = Bundle.main.url(forResource: "Settings", withExtension: "bundle")!.appendingPathComponent("Root.plist")
+        try! loadDefaultsFromSettingsPlistAtURL(defaultsPlistURL)
+        
+        initializeDebug()
+        
+        let fileManager = FileManager()
+        let libraryDirectoryURL = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).last!
+        let libraryDirectory = libraryDirectoryURL.path
+        x$(libraryDirectory)
+    }
+    
 	public override init() {
 		_ = AppDelegateBase.initializeOnce
 		super.init()
+        #if LOGGY_ENABLED
 		Activity.label("Basic Initialization") {
-			let defaultsPlistURL = Bundle.main.url(forResource: "Settings", withExtension: "bundle")!.appendingPathComponent("Root.plist")
-			try! loadDefaultsFromSettingsPlistAtURL(defaultsPlistURL)
-			
-			initializeDebug()
-			
-			let fileManager = FileManager()
-			let libraryDirectoryURL = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).last!
-			let libraryDirectory = libraryDirectoryURL.path
-			x$(libraryDirectory)
+            initializeBasics()
 		}
+        #else
+        initializeBasics()
+        #endif
 	}
+    
 	// MARK: -
+    
+    private static func initializeAnalytics() {
+        #if DEBUG
+        _ = nslogRedirectorInitializer
+        #endif
+        #if WATCHDOG_ENABLED
+        _ = watchdogInitializer
+        #endif
+        x$(buildAge)
+        _ = coreDataDiagnosticsInitializer
+        if x$(analyticsShouldBeEnabled) {
+            _ = crashlyticsInitializer
+            _ = appseeInitializer
+            _ = uxcamInitializer
+            _ = flurryInitializer
+            _ = mixpanelInitializer
+        }
+    }
+
 	static private let initializeOnce: Ignored = {
+        #if LOGGY_ENABLED
 		return Activity.label("Initializing Analytics") {
-			#if DEBUG
-				_ = nslogRedirectorInitializer
-			#endif
-			#if WATCHDOG_ENABLED
-				_ = watchdogInitializer
-			#endif
-			x$(buildAge)
-			_ = coreDataDiagnosticsInitializer
-			if x$(analyticsShouldBeEnabled) {
-				_ = crashlyticsInitializer
-				_ = appseeInitializer
-				_ = uxcamInitializer
-				_ = flurryInitializer
-				_ = mixpanelInitializer
-			}
+            initializeAnalytics()
 			return Ignored()
 		}
+        #else
+        initializeAnalytics()
+        return Ignored()
+        #endif
 	}()
 }
