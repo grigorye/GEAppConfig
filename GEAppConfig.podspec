@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author = { "Grigory Entin" => "grigory.entin@gmail.com" }
 
   s.ios.deployment_target = '11.0'
-  # s.osx.deployment_target = '10.10'
+  s.osx.deployment_target = '10.13'
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
 
@@ -21,15 +21,18 @@ Pod::Spec.new do |s|
   
   s.swift_version = "4.0"
 
-  s.source_files  = "GEAppConfig/*.swift"
+  s.ios.source_files = "GEAppConfig/iOS/*.swift", "GEAppConfig/Shared/*.swift"
+  s.osx.source_files = "GEAppConfig/macOS/*.swift", "GEAppConfig/Shared/*.swift"
+  s.source_files = "GEAppConfig/Shared/*.swift"
 
-  s.dependency 'GEDebugKit'
-  s.dependency 'GEUIKit'
+  s.ios.dependency 'GEDebugKit'
+  s.ios.dependency 'GEUIKit'
+  s.dependency 'GECoreData'
   s.dependency 'GEFoundation'
   s.dependency 'GETracing'
 
-  s.dependency 'FTLinearActivityIndicator'
-  s.dependency 'JGProgressHUD'
-  s.dependency 'Watchdog'
+  s.ios.dependency 'FTLinearActivityIndicator'
+  s.ios.dependency 'JGProgressHUD'
+  s.ios.dependency 'Watchdog'
 
 end
