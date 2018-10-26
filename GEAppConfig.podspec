@@ -21,13 +21,45 @@ Pod::Spec.new do |s|
   
   s.swift_version = "4.0"
 
-  s.ios.source_files = "GEAppConfig/iOS/*.swift", "GEAppConfig/Shared/*.swift"
-  s.osx.source_files = "GEAppConfig/macOS/*.swift", "GEAppConfig/Shared/*.swift"
-  s.source_files = "GEAppConfig/Shared/*.swift"
+  s.ios.source_files = "GEAppConfig/iOS"
+  s.osx.source_files = "GEAppConfig/macOS"
+
+  s.default_subspec = 'Core'
+  
+  s.static_framework = true
+
+  s.subspec 'Core' do |ss|
+    ss.source_files = "GEAppConfig/Core"
+    ss.ios.source_files = "GEAppConfig/Core/iOS"
+    ss.osx.source_files = "GEAppConfig/Core/macOS"
+  end
+
+  s.subspec 'Analytics' do |ss|
+    ss.source_files = "GEAppConfig/Analytics/*.swift"
+    ss.xcconfig = {
+      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_ANALYTICS_ENABLED'
+    }
+  end
+
+  s.subspec 'Crashlytics' do |ss|
+    ss.dependency 'GEAppConfig/Analytics'
+    ss.source_files = 'GEAppConfig/Analytics/Crashlytics/*.swift'
+    ss.xcconfig = {
+      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_CRASHLYTICS_ENABLED'
+    }
+    ss.dependency 'Crashlytics'
+  end
+
+  s.subspec 'CoreData' do |ss|
+    ss.source_files = 'GEAppConfig/CoreData/*.swift'
+    ss.xcconfig = {
+      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_COREDATA_ENABLED'
+    }
+    ss.dependency 'GECoreData'
+  end
 
   s.ios.dependency 'GEDebugKit'
   s.ios.dependency 'GEUIKit'
-  s.dependency 'GECoreData'
   s.dependency 'GEFoundation'
   s.dependency 'GETracing'
 
