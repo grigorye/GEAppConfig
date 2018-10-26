@@ -6,66 +6,29 @@
 //  Copyright © 2016 Grigory Entin. All rights reserved.
 //
 
-import func GEUIKit.openSettingsApp
-import GEDebugKit
-import var GEUIKit.urlTaskGeneratorProgressBinding 
-import func GEFoundation.loadDefaultsFromSettingsPlistAtURL
 import var GEFoundation.versionIsClean
 import var GEFoundation.buildAge
 #if DEBUG
 import var GEFoundation.nslogRedirectorInitializer
 #endif
-#if LOGGY_ENABLED
+#if GEAPPCONFIG_LOGGY_ENABLED
 import Loggy
 #endif
-import UIKit
 
 let analyticsShouldBeEnabled: Bool = {
 	let mainBundleURL = Bundle.main.bundleURL
 	return x$(versionIsClean) && !x$(mainBundleURL).lastPathComponent.hasPrefix("Test")
 }()
 
-open class AppDelegateBase : UIResponder, UIApplicationDelegate {
-	public var window: UIWindow?
+public class AppDelegateBase : AppDelegatePlatformBase {
+    
 	final var retainedObjects = [Any]()
-	// MARK: -
-	@IBAction public func openSettings(_ sender: AnyObject?) {
-		openSettingsApp()
-	}
-	// MARK: -
-	
-	func applicationShouldHaveMainWindow() {
-		
-		_ = networkActivityIndicatorInitializer
-	}
-	
-	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        
-        configureDebug()
-        
-		#if false
-		if x$(analyticsShouldBeEnabled) {
-			launchOptimizely(launchOptions: launchOptions)
-			configureFirebase()
-		}
-		#endif
-		
-		_ = urlTaskGeneratorProgressBinding
-		
-		DispatchQueue.main.async {
-			
-			self.applicationShouldHaveMainWindow()
-		}
-		return true
-	}
     
 	// MARK: -
     
-    private func initializeBasics() {
-        let defaultsPlistURL = Bundle.main.url(forResource: "Settings", withExtension: "bundle")!.appendingPathComponent("Root.plist")
-        try! loadDefaultsFromSettingsPlistAtURL(defaultsPlistURL)
+    override func initializeBasics() {
         
-        initializeDebug()
+        super.initializeBasics()
         
         let fileManager = FileManager()
         let libraryDirectoryURL = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).last!
@@ -76,7 +39,7 @@ open class AppDelegateBase : UIResponder, UIApplicationDelegate {
 	public override init() {
 		_ = AppDelegateBase.initializeOnce
 		super.init()
-        #if LOGGY_ENABLED
+        #if GEAPPCONFIG_LOGGY_ENABLED
 		Activity.label("Basic Initialization") {
             initializeBasics()
 		}
@@ -91,22 +54,34 @@ open class AppDelegateBase : UIResponder, UIApplicationDelegate {
         #if DEBUG
         _ = nslogRedirectorInitializer
         #endif
-        #if WATCHDOG_ENABLED
+        #if GEAPPCONFIG_WATCHDOG_ENABLED
         _ = watchdogInitializer
         #endif
         x$(buildAge)
+        #if GEAPPCONFIG_COREDATA_ENABLED
         _ = coreDataDiagnosticsInitializer
+        #endif
         if x$(analyticsShouldBeEnabled) {
+            #if GEAPPCONFIG_CRASHLYTICS_ENABLED
             _ = crashlyticsInitializer
+            #endif
+            #if GEAPPCONFIG_APPSEE_ENABLED
             _ = appseeInitializer
+            #endif
+            #if GEAPPCONFIG_UXCAM_ENABLED
             _ = uxcamInitializer
+            #endif
+            #if GEAPPCONFIG_FLURRY_ENABLED
             _ = flurryInitializer
+            #endif
+            #if GEAPPCONFIG_MIXPANEL_ENABLED
             _ = mixpanelInitializer
+            #endif
         }
     }
 
 	static private let initializeOnce: Ignored = {
-        #if LOGGY_ENABLED
+        #if GEAPPCONFIG_LOGGY_ENABLED
 		return Activity.label("Initializing Analytics") {
             initializeAnalytics()
 			return Ignored()
