@@ -6,6 +6,8 @@
 //  Copyright © 2017 Grigory Entin. All rights reserved.
 //
 
+import class GEFoundation.TypedUserDefaults
+import var GEFoundation.defaults
 import Watchdog
 
 extension TypedUserDefaults {

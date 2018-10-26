@@ -9,6 +9,8 @@
 #if DZ_READABILITY_ENABLED
 import DZReadability
 #endif
+import var GEFoundation.progressEnabledURLSessionTaskGenerator
+import GETracing
 import Foundation
 
 public func retrieveReadableHTMLFromURL(_ url: URL, completionHandler: @escaping ((HTMLString: String?, error: Error?)) -> ()) {
