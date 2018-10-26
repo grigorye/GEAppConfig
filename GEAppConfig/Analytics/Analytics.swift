@@ -6,7 +6,10 @@
 //  Copyright © 2016 Grigory Entin. All rights reserved.
 //
 
+import class GEFoundation.TypedUserDefaults
 import var GEFoundation.versionIsClean
+import var GEFoundation.defaults
+import GETracing
 import Foundation
 
 public let analyticsEnabled: Bool = {

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Grigory Entin. All rights reserved.
 //
 
+import GEFoundation
+import GETracing
 import typealias GETracing.LogRecord
 import Foundation
 
