@@ -47,7 +47,18 @@ Pod::Spec.new do |s|
     ss.xcconfig = {
       'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_CRASHLYTICS_ENABLED'
     }
+    ss.dependency 'Fabric'
     ss.dependency 'Crashlytics'
+  end
+
+  s.subspec 'Answers' do |ss|
+    ss.dependency 'GEAppConfig/Analytics'
+    ss.source_files = 'GEAppConfig/Analytics/Answers/*.swift'
+    ss.xcconfig = {
+      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_ANSWERS_ENABLED'
+    }
+    ss.dependency 'Fabric'
+    ss.dependency 'Answers'
   end
 
   s.subspec 'CoreData' do |ss|

@@ -65,6 +65,9 @@ public class AppDelegateBase : AppDelegatePlatformBase {
             #if GEAPPCONFIG_CRASHLYTICS_ENABLED
             _ = crashlyticsInitializer
             #endif
+            #if GEAPPCONFIG_ANSWERS_ENABLED
+            _ = answersInitializer
+            #endif
             #if GEAPPCONFIG_APPSEE_ENABLED
             _ = appseeInitializer
             #endif
