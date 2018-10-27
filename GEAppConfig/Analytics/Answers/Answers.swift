@@ -8,7 +8,7 @@
 
 #if GEAPPCONFIG_ANALYTICS_ENABLED && GEAPPCONFIG_ANSWERS_ENABLED
 import Fabric
-import Answers
+import Crashlytics
 #endif
 
 let answersInitializer: Void = {

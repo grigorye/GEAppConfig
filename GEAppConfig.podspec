@@ -58,7 +58,7 @@ Pod::Spec.new do |s|
       'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'GEAPPCONFIG_ANSWERS_ENABLED'
     }
     ss.dependency 'Fabric'
-    ss.dependency 'Answers'
+    ss.dependency 'Crashlytics'
   end
 
   s.subspec 'CoreData' do |ss|
