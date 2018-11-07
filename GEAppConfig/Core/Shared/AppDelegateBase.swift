@@ -57,6 +57,7 @@ public class AppDelegateBase : AppDelegatePlatformBase {
         #if GEAPPCONFIG_WATCHDOG_ENABLED
         _ = watchdogInitializer
         #endif
+        _ = fileLoggerInitializer
         x$(buildAge)
         #if GEAPPCONFIG_COREDATA_ENABLED
         _ = coreDataDiagnosticsInitializer

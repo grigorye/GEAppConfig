@@ -24,7 +24,7 @@ public let logFileURL: URL = {
 	return x
 }()
 
-let logFileHandle: FileHandle! = {
+public let logFileHandle: FileHandle! = {
 	try! fileManager.createDirectory(at: logFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
 	guard fileManager.createFile(atPath: logFileURL.path, contents: nil, attributes: nil) else {
 		return nil
