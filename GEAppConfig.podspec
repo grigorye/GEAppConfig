@@ -29,9 +29,10 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.subspec 'Core' do |ss|
-    ss.source_files = "GEAppConfig/Core"
-    ss.ios.source_files = "GEAppConfig/Core/iOS"
-    ss.osx.source_files = "GEAppConfig/Core/macOS"
+    ss.source_files = "GEAppConfig/Core/Shared"
+    ss.ios.source_files = "GEAppConfig/Core/Platform/iOS"
+    ss.osx.source_files = "GEAppConfig/Core/Platform/macOS"
+    ss.resource_bundles = { 'GEAppConfig-Sources' => 'GEAppConfig' }
   end
 
   s.subspec 'Analytics' do |ss|
