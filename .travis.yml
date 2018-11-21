@@ -5,6 +5,6 @@ env:
   matrix:
     - platforms=ios
 script:
-  - . Pods/GEContinuousIntegration/travis/script
+  - . Pods/GEContinuousIntegration/travis/script | bundle exec xcpretty
 after_success:
   - . Pods/GEContinuousIntegration/travis/after_success
