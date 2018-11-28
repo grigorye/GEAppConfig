@@ -11,6 +11,8 @@ import var GEFoundation.buildAge
 #if DEBUG
 import var GEFoundation.nslogRedirectorInitializer
 #endif
+import typealias GEFoundation.Ignored
+import func GETracing.x$
 #if GEAPPCONFIG_LOGGY_ENABLED
 import Loggy
 #endif
