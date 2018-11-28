@@ -11,11 +11,12 @@
 import GEFoundation
 import struct GETracing.LogRecord
 import var GETracing.logRecord
+import func GETracing.defaultLoggedText
 import Crashlytics
 import Fabric
 
 func crashlyticsLogRecord(_ record: LogRecord) {
-    let text = defaultLoggedTextWithThread(for: record)
+    let text = defaultLoggedText(for: record)
     CLSLogv("%@", getVaList([text]))
 }
 

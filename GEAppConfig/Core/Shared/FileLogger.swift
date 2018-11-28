@@ -7,7 +7,8 @@
 //
 
 import GEFoundation
-import GETracing
+import func GETracing.x$
+import func GETracing.defaultLoggedText
 import typealias GETracing.LogRecord
 import Foundation
 
@@ -32,13 +33,11 @@ public let logFileHandle: FileHandle! = {
 	return try! FileHandle(forWritingTo: logFileURL)
 }()
 
-import func GEFoundation.defaultLoggedTextWithTimestampAndThread
-
 func fileLogger(record: LogRecord) {
 	guard let logFileHandle = logFileHandle else {
 		return
 	}
-	let text = defaultLoggedTextWithTimestampAndThread(for: record) + "\n"
+	let text = defaultLoggedText(for: record, timestampEnabled: true) + "\n"
 	let data = text.data(using: .utf8)!
 	logFileHandle.write(data)
 }
