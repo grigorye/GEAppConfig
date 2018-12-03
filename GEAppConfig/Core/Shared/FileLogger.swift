@@ -8,8 +8,7 @@
 
 import GEFoundation
 import func GETracing.x$
-import func GETracing.defaultLoggedText
-import var GETracing.defaultLoggedTextTerminator
+import func GETracing.loggedText
 import typealias GETracing.LogRecord
 import Foundation
 
@@ -38,7 +37,9 @@ func fileLogger(record: LogRecord) {
 	guard let logFileHandle = logFileHandle else {
 		return
 	}
-	let text = defaultLoggedText(for: record, timestampEnabled: true) + defaultLoggedTextTerminator
+	let text = loggedText(for: record, timestampEnabled: true) {
+		"\($0.locationPrefix)\($0.timestampPrefix)[\($0.threadDescription)] \($0.message)\n"
+	}
 	let data = text.data(using: .utf8)!
 	logFileHandle.write(data)
 }
