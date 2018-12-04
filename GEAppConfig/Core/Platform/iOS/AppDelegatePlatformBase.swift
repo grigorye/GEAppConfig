@@ -30,7 +30,7 @@ open class AppDelegatePlatformBase : UIResponder, UIApplicationDelegate {
         _ = networkActivityIndicatorInitializer
     }
     
-    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         configureDebug()
         

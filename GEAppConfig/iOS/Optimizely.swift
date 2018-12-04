@@ -12,7 +12,7 @@
 
 import UIKit
 
-func launchOptimizely(launchOptions: [UIApplicationLaunchOptionsKey : Any]?) {
+func launchOptimizely(launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
 	
 	#if ANALYTICS_ENABLED && OPTIMIZELY_ENABLED
 		Optimizely.start(withAPIToken: "AANaUR4B7B7xxQ8ni7TZkZkivcHQ9MX2~8167430621", launchOptions:launchOptions)

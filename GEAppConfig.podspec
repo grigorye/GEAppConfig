@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.source = { :git => "https://github.com/grigorye/GEAppConfig.git", :tag => "#{s.version}" }
   
-  s.swift_version = "4.0"
+  s.swift_version = "4.2"
 
   s.ios.source_files = "GEAppConfig/iOS"
   s.osx.source_files = "GEAppConfig/macOS"

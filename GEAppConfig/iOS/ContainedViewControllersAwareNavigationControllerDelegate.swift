@@ -21,7 +21,7 @@ class ContainedViewControllersAwareNavigationControllerDelegate: NSObject, UINav
 extension UIViewController {
 	func makeContainedViewControllersPerformBlock(_ block: (UIViewController) -> ()) {
 		block(self)
-		for viewController in self.childViewControllers {
+		for viewController in self.children {
 			viewController.makeContainedViewControllersPerformBlock(block)
 		}
 	}
