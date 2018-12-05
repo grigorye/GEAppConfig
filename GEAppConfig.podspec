@@ -70,6 +70,10 @@ Pod::Spec.new do |s|
     ss.dependency 'GECoreData'
   end
 
+  s.subspec 'iOS' do |ss|
+    ss.ios.source_files = 'GEAppConfig/iOS/*.swift'
+  end
+
   s.ios.dependency 'GEDebugKit'
   s.ios.dependency 'GEUIKit'
   s.dependency 'GEFoundation'
