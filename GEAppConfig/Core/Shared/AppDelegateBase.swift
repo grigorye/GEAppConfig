@@ -22,7 +22,7 @@ let analyticsShouldBeEnabled: Bool = {
 	return x$(versionIsClean) && !x$(mainBundleURL).lastPathComponent.hasPrefix("Test")
 }()
 
-public class AppDelegateBase : AppDelegatePlatformBase {
+open class AppDelegateBase : AppDelegatePlatformBase {
     
 	final var retainedObjects = [Any]()
     
